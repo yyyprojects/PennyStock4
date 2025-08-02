@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: The World of Penny Stocks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Energetic & Playful (Adapted for clarity) -->
+    <!-- Application Structure Plan: The infographic follows a narrative structure designed to educate a novice investor. It starts with a bold, simple definition (The Hook). It then immediately presents the core conflict: "The Allure vs. The Reality," using a donut chart to visually argue that risks outweigh rewards. The next sections dive deeper into the key risks (Volatility, Illiquidity, Lack of Info) using dedicated visualizations. "Where They Trade" uses a clear, color-coded system to explain OTC tiers. "Anatomy of a Scam" visualizes the 'Pump & Dump' process to make the threat tangible. The infographic concludes with actionable "Investor Red Flags." This flow guides the user from awareness to understanding to caution. -->
+    <!-- Visualization & Content Choices: 
+        - Data Point: SEC Definition. Goal: Inform. Visualization: Large, bold text. Justification: Immediately establishes the core concept with high impact. Method: Styled HTML.
+        - Data Point: Risks vs. Attractions. Goal: Compare. Visualization: Donut Chart. Justification: Visually demonstrates the imbalance between the few attractions and many significant risks. Library: Chart.js.
+        - Data Point: Volatility. Goal: Show Change. Visualization: Jagged Line Chart. Justification: Effectively communicates the erratic and unpredictable price swings. Library: Chart.js.
+        - Data Point: Bid-Ask Spread. Goal: Inform. Visualization: HTML/CSS Diagram. Justification: A simple visual diagram is clearer than text for explaining this hidden cost. Method: HTML/CSS with Tailwind.
+        - Data Point: OTC Market Tiers. Goal: Organize/Compare. Visualization: Color-coded cards. Justification: Uses color psychology (Green/Yellow/Red) to quickly convey risk levels. Method: HTML/CSS with Tailwind.
+        - Data Point: Pump & Dump Scheme. Goal: Organize Process. Visualization: HTML/CSS Flowchart. Justification: Breaks a complex process into simple, digestible steps. Method: HTML/CSS with Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            max-height: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #FF4E50, #FC913A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto px-4 py-8 md:py-16">
+
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-2">The World of <span class="gradient-text">Penny Stocks</span></h1>
+            <p class="text-lg text-gray-600">A Visual Guide to High-Risk, High-Reward Investing in the USA</p>
+        </header>
+
+        <section class="mb-20">
+            <div class="text-center bg-white rounded-lg shadow-xl p-8 max-w-2xl mx-auto">
+                <p class="text-xl text-gray-600 mb-2">What is a Penny Stock? According to the SEC:</p>
+                <p class="text-7xl md:text-9xl font-extrabold text-gray-800">&lt; $5</p>
+                <p class="text-xl text-gray-600 mt-2">per share</p>
+                <p class="mt-4 max-w-lg mx-auto text-gray-500">This simple definition hides a world of complexity and risk. These are shares in small, often developing or distressed companies, not typically found on major exchanges like the NYSE or Nasdaq.</p>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-4">The Allure vs. The Reality</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Investors are drawn by the dream of massive returns from a small investment. However, the landscape is dominated by significant, often company-ending risks. This chart shows the conceptual weight of risks versus the potential attractions.</p>
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="chart-container h-80 md:h-96">
+                    <canvas id="riskRewardChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-12">Key Dangers: A Closer Look</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Extreme Volatility</h3>
+                    <p class="text-gray-600 mb-6 text-center">Prices can swing wildly on very little news or trading volume. What goes up 100% in a day can just as easily fall to zero.</p>
+                    <div class="chart-container h-48">
+                        <canvas id="volatilityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Crippling Illiquidity</h3>
+                    <p class="text-gray-600 mb-6 text-center">"Thinly traded" means few buyers exist. You might own a stock that's "up," but be completely unable to sell it and realize your profit.</p>
+                    <div class="text-center">
+                        <p class="font-semibold mb-2">The Hidden Cost: Bid-Ask Spread</p>
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <div class="flex justify-between items-center text-sm mb-2">
+                                <span>You Buy (Ask Price)</span>
+                                <span>You Sell (Bid Price)</span>
+                            </div>
+                            <div class="relative w-full h-8 bg-red-200 rounded-full flex items-center">
+                                <div class="h-8 bg-green-400 rounded-l-full" style="width: 45%;"></div>
+                                <div class="absolute left-0 top-0 h-full w-full flex justify-between items-center px-2">
+                                    <span class="font-bold text-white">$0.10</span>
+                                    <span class="font-bold text-white">$0.15</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">This 50% spread means the stock must rise 50% just for you to break even on a sale.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6 md:col-span-2 lg:col-span-1">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Lack of Information</h3>
+                    <p class="text-gray-600 mb-6 text-center">Many penny stock companies are not required to file financial reports with the SEC, making it nearly impossible to verify their claims or true value.</p>
+                    <div class="bg-gray-100 rounded-lg p-6 text-center">
+                        <span class="text-6xl">❓</span>
+                        <p class="text-xl font-bold mt-4">Who are they?</p>
+                        <p class="text-gray-600">What do they sell?</p>
+                        <p class="text-gray-600">Are they profitable?</p>
+                        <p class="mt-4 font-semibold text-red-600">Without public data, you're investing blind.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-4">Where They Trade: The OTC Markets</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Most penny stocks trade "Over-the-Counter" (OTC), not on major exchanges. The OTC Markets Group separates companies into tiers based on the information they provide, which acts as a general guide to their risk level.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="border-t-8 border-green-500 bg-white rounded-lg shadow-lg p-6 text-center">
+                    <h3 class="text-2xl font-bold mb-2">OTCQX</h3>
+                    <p class="font-semibold text-green-600 mb-4">Best Market</p>
+                    <p class="text-gray-600">Companies meet high financial standards and are current with their disclosures. Penny stocks are generally excluded from this tier.</p>
+                </div>
+                <div class="border-t-8 border-yellow-500 bg-white rounded-lg shadow-lg p-6 text-center">
+                    <h3 class="text-2xl font-bold mb-2">OTCQB</h3>
+                    <p class="font-semibold text-yellow-600 mb-4">Venture Market</p>
+                    <p class="text-gray-600">For developing companies that must be current in their reporting and undergo annual verification. Can include penny stocks.</p>
+                </div>
+                <div class="border-t-8 border-red-500 bg-white rounded-lg shadow-lg p-6 text-center">
+                    <h3 class="text-2xl font-bold mb-2">Pink Sheets</h3>
+                    <p class="font-semibold text-red-600 mb-4">Open Market</p>
+                    <p class="text-gray-600">The riskiest tier with no minimum financial standards. This is where most "true" penny stocks with limited or no public information are found.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-4">Anatomy of a Scam: The "Pump & Dump"</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">This is the most common form of penny stock fraud. Scammers use hype and false information to manipulate a stock's price for their own profit, leaving other investors with worthless shares.</p>
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-4">
+                    <div class="text-center flex-1">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-orange-400 text-white flex items-center justify-center text-3xl font-bold mb-2">1</div>
+                        <h4 class="text-xl font-bold">Accumulation</h4>
+                        <p class="text-gray-600 text-sm">Fraudsters buy huge amounts of a worthless stock for fractions of a cent.</p>
+                    </div>
+                    <div class="text-4xl text-gray-300 font-light hidden md:block">→</div>
+                    <div class="text-center flex-1">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-red-500 text-white flex items-center justify-center text-3xl font-bold mb-2">2</div>
+                        <h4 class="text-xl font-bold">The Pump</h4>
+                        <p class="text-gray-600 text-sm">They spread hype and false news via email, social media, and chat rooms to create buying frenzy.</p>
+                    </div>
+                    <div class="text-4xl text-gray-300 font-light hidden md:block">→</div>
+                    <div class="text-center flex-1">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-yellow-500 text-white flex items-center justify-center text-3xl font-bold mb-2">3</div>
+                        <h4 class="text-xl font-bold">The Dump</h4>
+                        <p class="text-gray-600 text-sm">As the price skyrockets from the hype, they sell all their shares for a massive profit.</p>
+                    </div>
+                    <div class="text-4xl text-gray-300 font-light hidden md:block">→</div>
+                    <div class="text-center flex-1">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-gray-800 text-white flex items-center justify-center text-3xl font-bold mb-2">4</div>
+                        <h4 class="text-xl font-bold">The Collapse</h4>
+                        <p class="text-gray-600 text-sm">The price crashes, leaving new investors holding worthless stock.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-3xl font-bold text-center mb-4">Investor Red Flags</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Protect yourself by recognizing the warning signs of a potential scam. If it sounds too good to be true, it almost certainly is.</p>
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                    <li class="flex items-start"><span class="text-2xl mr-3">🚨</span><div><span class="font-bold">Unsolicited Contact:</span> Random emails, texts, or calls promoting a "hot tip."</div></li>
+                    <li class="flex items-start"><span class="text-2xl mr-3">🚨</span><div><span class="font-bold">Guaranteed Returns:</span> Promises of high profits with "no risk" are illegal and a lie.</div></li>
+                    <li class="flex items-start"><span class="text-2xl mr-3">🚨</span><div><span class="font-bold">High-Pressure Tactics:</span> Urgency to "buy now before it's too late!"</div></li>
+                    <li class="flex items-start"><span class="text-2xl mr-3">🚨</span><div><span class="font-bold">No Public Info:</span> Inability to find SEC filings or independent financial reports.</div></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+<script>
+    const riskRewardCtx = document.getElementById('riskRewardChart').getContext('2d');
+    new Chart(riskRewardCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['High Volatility', 'Low Liquidity', 'Fraud & Manipulation', 'Lack of Information', 'Potential for High Gains', 'Low Cost of Entry'],
+            datasets: [{
+                data: [30, 25, 20, 15, 5, 5],
+                backgroundColor: ['#FF4E50', '#FC913A', '#F9D423', '#FF8C42', '#90EE90', '#ADD8E6'],
+                borderColor: '#f8fafc',
+                borderWidth: 4,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 15,
+                        font: { size: 12 }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Conceptual Breakdown: Risks vs. Attractions',
+                    font: { size: 16, weight: 'bold' },
+                    padding: { top: 10, bottom: 20 }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) { return label.join(' '); }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const volatilityCtx = document.getElementById('volatilityChart').getContext('2d');
+    new Chart(volatilityCtx, {
+        type: 'line',
+        data: {
+            labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+            datasets: [{
+                label: 'Stock Price',
+                data: [0.20, 0.85, 0.30, 0.55, 0.10, 0.95, 0.25],
+                borderColor: '#FF4E50',
+                backgroundColor: 'rgba(255, 78, 80, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) { return '$' + value.toFixed(2); }
+                    }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) { return label.join(' '); }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
